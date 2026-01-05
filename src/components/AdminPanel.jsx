@@ -19,7 +19,7 @@ export const AdminPanel = () => {
   const fetchMembers = async (filterStatus = "pending") => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/admin/members?status=${filterStatus}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/members?status=${filterStatus}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -54,7 +54,7 @@ export const AdminPanel = () => {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/admin/approve/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/approve/${id}`,
         {},
         {
           headers: {
@@ -78,7 +78,7 @@ export const AdminPanel = () => {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/admin/reject/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/reject/${id}`,
         {},
         {
           headers: {

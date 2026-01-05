@@ -92,7 +92,7 @@ export const Registration = () => {
   data.append("paymentScreenshot", paymentScreenshot);
 
   try {
-    await axios.post("http://localhost:5000/api/register", data, {
+    await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/register`, data, {
       headers: { "Content-Type": "multipart/form-data" }
     });
 
