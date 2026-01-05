@@ -1,0 +1,195 @@
+nav {
+    height: 8rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #121b2257;
+    position: absolute;
+    z-index: 9999;
+}
+
+.inside-nav{
+    height: 98%;
+    width: 99%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-img {
+    height: 75rem;
+    position: absolute;
+    left: -7%;
+    opacity: 0.7;
+}
+
+
+.logo {
+    height: 60%;
+    width: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img{
+    height: auto;
+    width: 100%;
+}
+
+.menu-links{
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    z-index: 9999999999999999999999999999;
+}
+
+.menu-links p {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    font-size: 12px;
+    padding: 0.5rem;
+    margin-inline: 1.25rem;
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+
+
+.menu-links p:hover{
+    color: #f5ce89;
+    transition: all 0.2s ease-in;
+}
+
+
+.mm{
+    text-decoration: none;
+}
+
+.ham-menu{
+    color: #fff !important;
+    display: none;
+}
+
+
+
+.inside-nav {
+    height: 98%;
+    width: 99%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+@media screen and (max-width:700px){
+    .nav-img {
+        height: 50rem;
+        position: absolute;
+        left: -13%;
+}
+.menu-links p {
+    font-size: 12px;
+    padding: 0.25rem;
+    margin-inline: 0.65rem;
+}
+}
+
+@media screen and (max-width:600px){
+    .ham-menu{
+        display: flex;
+        padding-right: -1rem;
+    }
+    .menu-links{
+        display: none;
+    }
+    .inside-nav {
+    flex-direction: row;
+    justify-content: space-between;
+}
+.logo img {
+    translate: -1rem;
+}
+    .ham-menu {
+        display: flex;
+        translate: -0.5rem;
+        font-size: 24px;
+    }
+
+
+    .mobile-menu{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #111b22;
+        height: 100vh;
+        width: 70%;
+        top: 0;
+        right: 0%;
+        position: fixed;
+        z-index: 999999;
+        transition: all 0.56s ease-in;
+        /* opacity: 0; */
+    }
+
+        .mm {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        width: 100%;
+        height: 50%;
+    }
+
+        .close {
+        color: #fff;
+        position: absolute;
+        top: 5%;
+        font-size: 24px;
+        right: 5%;
+    }
+
+    /* .mpl{
+        display: flex !important;
+    } */
+
+
+}
+
+.inside-second-section h2
+ {
+        z-index: 10 !important;
+    }
+
+@media screen and (max-width:450px){
+        .nav-img {
+        height: 35rem;
+        left: -22%;
+    }
+}
+
+
+.mobile-menu {
+    /* opacity: 0; */
+    display: none;
+    /* z-index: -1; */
+}
+
+
+
+/* .mpl{
+    display: none;
+} */
+
+.logo-nav{
+        height: 4rem;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+}
