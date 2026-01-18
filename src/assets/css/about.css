@@ -113,3 +113,13 @@
         font-size: 22px;
     }
 }
+
+.about-first-section h1 {
+    color: #fff;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f5ce89;
+}
+
+.iofc{
+    align-items: flex-start;
+}

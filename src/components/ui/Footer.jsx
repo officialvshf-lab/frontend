@@ -64,12 +64,14 @@ export const Footer = () => {
                     <div className="footer-widget-card">
                         <NavLink to={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`}>
                         <FaWhatsapp className='footer-icon'/>
-
                         </NavLink>
-                        <NavLink to="">
 
+
+                        <NavLink to="">
                         <FaInstagram className='footer-icon'/>
                         </NavLink>
+
+                        
                         <NavLink to="">
                         <FaFacebook className='footer-icon'/>
 
@@ -77,7 +79,6 @@ export const Footer = () => {
 
                         <NavLink to="" className="footer-icon">
                             <FaLinkedin />
-
                         </NavLink>
 
                     </div>
