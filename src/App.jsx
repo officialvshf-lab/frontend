@@ -6,6 +6,7 @@ import { Registration } from './pages/Registration';
 import { AdminPanel } from './components/AdminPanel';
 import { AdminLogin } from './components/AdminLogin';
 import ContactUs from './pages/Contact';
+import { About } from './pages/About';
 
 
 
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path:"/contact",
         element: <ContactUs/>
+      },
+      {
+        path:"/about",
+        element: <About/>
       }
     ]
   }

@@ -1,0 +1,115 @@
+.about-first-section{
+    padding: 4rem 0;
+    padding-top: 12rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #070c0f;
+}
+
+
+.about-first-section h1{
+    color: #fff;
+}
+
+.inside-about-first-section{
+    padding-top: 2rem;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inside-about-first-card-section{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+}
+
+.inside-about-first-card-section img{
+    height: 30rem;
+    width: 30rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 0.25rem; */
+    border: 1px solid #f5ce89;
+}
+
+.inside-about-first-card-section p {
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.intro-title{
+    padding: 1.5rem 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.intro-title h2 {
+    color: #f5ce89;
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 2px;
+}
+
+.intro-title h3 {
+    color: #f5ce89;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+@media screen and (max-width: 1250px){
+    .inside-about-first-section {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .inside-about-first-card-section img {
+        height: 20rem;
+        width: 20rem;
+    }
+    .inside-about-first-card-section p {
+        font-size: 14px;
+        line-height: 1.5rem;
+    }
+    .intro-title h2 {
+        font-size: 20px;
+    }
+    .intro-title h3 {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .about-first-section {
+        padding-top: 8rem;
+    }
+    .inside-about-first-section {
+        width: 100%;
+        flex-direction: column;
+    }
+    .inside-about-first-card-section {
+        width: 91%;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .about-first-section h1 {
+        font-size: 22px;
+    }
+}

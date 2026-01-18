@@ -1353,3 +1353,17 @@ input, textarea {
     color: #f5ce89;
     margin-top: 2rem;
 }
+
+@media screen and (max-width: 900px){
+    .menu-links p {
+        font-size: 10px;
+        padding: 0.05rem;
+        margin-inline: 0.7rem;
+    }
+}
+
+@media screen and (max-width:640px){
+    .logo {
+        width: 7rem !important;
+    }
+}
