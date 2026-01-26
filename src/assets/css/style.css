@@ -1380,3 +1380,20 @@ input, textarea {
     flex-direction: column;
 }
 }
+
+.form-div label{
+    color: #fff;
+}
+
+label{
+    color: #fff;
+}
+
+.atoz{
+    display: flex;
+}
+
+.atoz input{
+    height: 1rem;
+    width: 1rem;
+}
