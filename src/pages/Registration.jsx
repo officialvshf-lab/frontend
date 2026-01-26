@@ -61,7 +61,7 @@ export const Registration = () => {
   };
 
   /* ================= STEP 1 → STEP 2 ================= */
-  const proceedToPayment = (e) => {
+  const proceedToPayment = async (e) => {
     e.preventDefault();
 
     if (!isAgeValid(formData.dob)) {
@@ -79,7 +79,28 @@ export const Registration = () => {
       return;
     }
 
-    setStep(2);
+    // ✅ DUPLICATE MOBILE CHECK (BEFORE PAYMENT)
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/register/check-mobile`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mobile: formData.mobile })
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.exists) {
+        alert(result.message);
+        return; // ❌ STOP – NO PAYMENT
+      }
+
+      setStep(2);
+    } catch {
+      alert("Unable to verify mobile number");
+    }
   };
 
   /* ================= RAZORPAY PAYMENT ================= */
@@ -110,10 +131,7 @@ export const Registration = () => {
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                ...response,
-                amount: formData.amount
-              })
+              body: JSON.stringify(response)
             }
           );
 
@@ -148,7 +166,6 @@ export const Registration = () => {
     data.append("photo", photo);
     data.append("idProof", idProof);
     data.append("paymentId", paymentId);
-    data.append("paymentStatus", "PAID");
 
     try {
       await axios.post(
@@ -157,7 +174,7 @@ export const Registration = () => {
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
-      alert("Registration successful 🎉");
+      alert("Registration submitted successfully. Awaiting admin approval.");
       window.location.reload();
     } catch (err) {
       alert(err?.response?.data?.message || "Registration failed");
@@ -182,9 +199,9 @@ export const Registration = () => {
             <div className="form-div">
               <input type="date" name="dob" onChange={handleChange} required />
               <select name="gender" value={formData.gender} onChange={handleChange}>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
               </select>
             </div>
 
@@ -209,10 +226,10 @@ export const Registration = () => {
                 value={formData.membershipType}
                 onChange={handleChange}
               >
-                <option>General Member 1</option>
-                <option>District Member 2100</option>
-                <option>State Member 5100</option>
-                <option>National Member 11000</option>
+                <option value="General Member">General Member – ₹1</option>
+                <option value="District Member">District Member – ₹2100</option>
+                <option value="State Member">State Member – ₹5100</option>
+                <option value="National Member">National Member – ₹11000</option>
               </select>
 
               <div>
@@ -234,7 +251,7 @@ export const Registration = () => {
                   checked={agree}
                   onChange={(e) => setAgree(e.target.checked)}
                 />{" "}
-                I agree that the registration fee is non-refundable and accept the Terms & Conditions.
+                I agree that the registration fee is <b>non-refundable</b> and accept the Terms & Conditions.
               </label>
             </div>
 

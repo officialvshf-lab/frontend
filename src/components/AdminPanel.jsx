@@ -3,8 +3,8 @@ import axios from "axios";
 
 export const AdminPanel = () => {
   const [members, setMembers] = useState([]);
-  const [status, setStatus] = useState("pending");
-  const [loadingId, setLoadingId] = useState(null); // 🔥 NEW
+  const [status, setStatus] = useState("PENDING");
+  const [loadingId, setLoadingId] = useState(null);
 
   const token = localStorage.getItem("adminToken");
 
@@ -16,7 +16,7 @@ export const AdminPanel = () => {
   }, [token]);
 
   /* ================= FETCH MEMBERS ================= */
-  const fetchMembers = async (filterStatus = "pending") => {
+  const fetchMembers = async (filterStatus = "PENDING") => {
     try {
       const res = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/api/admin/members?status=${filterStatus}`,
@@ -26,7 +26,13 @@ export const AdminPanel = () => {
           }
         }
       );
-      setMembers(res.data);
+
+      // ✅ SAFETY FIX
+      const list = Array.isArray(res.data)
+        ? res.data
+        : res.data.members || [];
+
+      setMembers(list);
       setStatus(filterStatus);
     } catch (err) {
       alert("Session expired. Please login again.");
@@ -36,19 +42,19 @@ export const AdminPanel = () => {
   };
 
   useEffect(() => {
-    fetchMembers("pending");
+    fetchMembers("PENDING");
   }, []);
 
-  /* ================= APPROVE (OPTIMISTIC UI) ================= */
+  /* ================= APPROVE ================= */
   const approve = async (id) => {
     if (!window.confirm("Approve this member?")) return;
 
     setLoadingId(id);
 
-    // 🔥 INSTANT UI UPDATE
+    // optimistic UI
     setMembers((prev) =>
       prev.map((m) =>
-        m._id === id ? { ...m, paymentStatus: "approved" } : m
+        m._id === id ? { ...m, approvalStatus: "APPROVED" } : m
       )
     );
 
@@ -62,9 +68,9 @@ export const AdminPanel = () => {
           }
         }
       );
-    } catch (err) {
-      alert("Approval failed. Please refresh.");
-      fetchMembers(status); // rollback
+    } catch {
+      alert("Approval failed");
+      fetchMembers(status);
     } finally {
       setLoadingId(null);
     }
@@ -87,23 +93,18 @@ export const AdminPanel = () => {
         }
       );
       fetchMembers(status);
-    } catch (err) {
+    } catch {
       alert("Reject failed");
     } finally {
       setLoadingId(null);
     }
   };
 
-  /* ================= OPEN FILE ================= */
   const openFile = (url) => {
-    if (!url) {
-      alert("File not available");
-      return;
-    }
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (!url) return alert("File not available");
+    window.open(url, "_blank");
   };
 
-  /* ================= LOGOUT ================= */
   const logout = () => {
     localStorage.removeItem("adminToken");
     window.location.href = "/admin/login";
@@ -116,11 +117,11 @@ export const AdminPanel = () => {
         <button onClick={logout}>Logout</button>
       </div>
 
-      {/* FILTER BUTTONS */}
+      {/* FILTERS */}
       <div style={filters}>
-        <button onClick={() => fetchMembers("pending")}>Pending</button>
-        <button onClick={() => fetchMembers("approved")}>Approved</button>
-        <button onClick={() => fetchMembers("rejected")}>Rejected</button>
+        <button onClick={() => fetchMembers("PENDING")}>Pending</button>
+        <button onClick={() => fetchMembers("APPROVED")}>Approved</button>
+        <button onClick={() => fetchMembers("REJECTED")}>Rejected</button>
         <button onClick={() => fetchMembers("")}>All</button>
       </div>
 
@@ -128,94 +129,69 @@ export const AdminPanel = () => {
         <p style={{ textAlign: "center" }}>No records found</p>
       )}
 
-      {members.map((m) => (
-        <div key={m._id} style={card}>
-          <h3>{m.fullName}</h3>
+      {Array.isArray(members) &&
+        members.map((m) => (
+          <div key={m._id} style={card}>
+            <h3>{m.fullName}</h3>
 
-          <p><b>Father / Spouse:</b> {m.fatherName}</p>
-          <p><b>Gender:</b> {m.gender}</p>
-          <p><b>DOB:</b> {new Date(m.dob).toLocaleDateString()}</p>
-          <p><b>Mobile:</b> {m.mobile}</p>
-          <p><b>Email:</b> {m.email}</p>
-          <p><b>Address:</b> {m.address}</p>
-          <p><b>City:</b> {m.city}</p>
-          <p><b>Pincode:</b> {m.pincode}</p>
-          <p><b>State:</b> {m.state}</p>
-          <p><b>Membership:</b> {m.membershipType}</p>
-          <p><b>Amount:</b> ₹{m.amount}</p>
+            <p><b>Mobile:</b> {m.mobile}</p>
+            <p><b>Email:</b> {m.email}</p>
+            <p><b>Membership:</b> {m.membershipType}</p>
+            <p><b>Amount:</b> ₹{m.amount}</p>
 
-          <p>
-            <b>Status:</b>{" "}
-            <span
-              style={{
-                fontWeight: "bold",
-                color:
-                  m.paymentStatus === "approved"
-                    ? "green"
-                    : m.paymentStatus === "rejected"
-                    ? "red"
-                    : "orange"
-              }}
-            >
-              {m.paymentStatus.toUpperCase()}
-            </span>
-          </p>
-
-          <hr />
-
-          <p><b>Attachments:</b></p>
-
-          <button onClick={() => openFile(m.photo)}>View Photo</button>
-          <br /><br />
-
-          <button onClick={() => openFile(m.idProof)}>View ID Proof</button>
-          <br /><br />
-
-          <button onClick={() => openFile(m.paymentScreenshot)}>
-            View Payment Proof
-          </button>
-
-          {m.idCardPath && (
-            <>
-              <br /><br />
-              <button onClick={() => openFile(m.idCardPath)}>
-                View ID Card
-              </button>
-            </>
-          )}
-
-          {/* ACTION BUTTONS */}
-          {m.paymentStatus === "pending" && (
-            <div style={actions}>
-              <button
-                disabled={loadingId === m._id}
-                onClick={() => approve(m._id)}
+            <p>
+              <b>Status:</b>{" "}
+              <span
                 style={{
-                  background: loadingId === m._id ? "gray" : "green",
-                  color: "white",
-                  cursor:
-                    loadingId === m._id ? "not-allowed" : "pointer"
+                  color:
+                    m.approvalStatus === "APPROVED"
+                      ? "green"
+                      : m.approvalStatus === "REJECTED"
+                      ? "red"
+                      : "orange",
+                  fontWeight: "bold"
                 }}
               >
-                {loadingId === m._id ? "Approving..." : "Approve"}
-              </button>
+                {m.approvalStatus}
+              </span>
+            </p>
 
-              <button
-                disabled={loadingId === m._id}
-                onClick={() => reject(m._id)}
-                style={{
-                  background: loadingId === m._id ? "gray" : "red",
-                  color: "white",
-                  cursor:
-                    loadingId === m._id ? "not-allowed" : "pointer"
-                }}
-              >
-                Reject
-              </button>
-            </div>
-          )}
-        </div>
-      ))}
+            <hr />
+
+            <button onClick={() => openFile(m.photo)}>View Photo</button>
+            <br /><br />
+            <button onClick={() => openFile(m.idProof)}>View ID Proof</button>
+
+            {m.idCardPath && (
+              <>
+                <br /><br />
+                <button onClick={() => openFile(m.idCardPath)}>
+                  View ID Card
+                </button>
+              </>
+            )}
+
+            {m.approvalStatus === "PENDING" && (
+              <div style={actions}>
+                <button
+                  disabled={loadingId === m._id}
+                  onClick={() => approve(m._id)}
+                  style={{ background: "green", color: "white" }}
+                >
+                  Approve
+                </button>
+
+                <button
+                  disabled={loadingId === m._id}
+                  onClick={() => reject(m._id)}
+                  style={{ background: "red", color: "white" }}
+                >
+                  Reject
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
     </div>
   );
 };
