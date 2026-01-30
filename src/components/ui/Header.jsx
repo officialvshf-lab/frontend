@@ -51,9 +51,9 @@ export const Header = () => {
                     </NavLink> */}
 
 
-                    <NavLink to="/gallery" className='mm'>
+                    {/* <NavLink to="/gallery" className='mm'>
                         <p>Gallery</p>
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink to="/contact" className='mm'>
                         <p>Contact Us</p>
                     </NavLink>
@@ -81,9 +81,9 @@ export const Header = () => {
                     </NavLink> */}
 
 
-                    <NavLink onClick={closeMenu} to="/gallery" className='mm'>
+                    {/* <NavLink onClick={closeMenu} to="/gallery" className='mm'>
                         <p>Gallery</p>
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink onClick={closeMenu} to="/contact" className='mm'>
                         <p>Contact Us</p>
                     </NavLink>

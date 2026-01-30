@@ -227,7 +227,7 @@ export const Registration = () => {
                 onChange={handleChange}
               >
                 <option value="General Member">General Member – ₹1</option>
-                <option value="District Member">District Member – ₹2100</option>
+                <option value="District Member">District Member – ₹1100</option>
                 <option value="State Member">State Member – ₹5100</option>
                 <option value="National Member">National Member – ₹11000</option>
               </select>
@@ -251,7 +251,7 @@ export const Registration = () => {
                   checked={agree}
                   onChange={(e) => setAgree(e.target.checked)}
                 />{" "}
-                I agree that the registration fee is <b>non-refundable</b> and accept the Terms & Conditions.
+                I agree that the registration fee is non-refundable and accept the Terms & Conditions.
               </label>
             </div>
 

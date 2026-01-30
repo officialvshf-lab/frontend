@@ -39,9 +39,9 @@ export const Footer = () => {
                     <NavLink to="/registration" className='mm'>
                         <p>Registration</p>
                     </NavLink>
-                    <NavLink to="/gallery" className='mm'>
+                    {/* <NavLink to="/gallery" className='mm'>
                         <p>Gallery</p>
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink to="/contact" className='mm'>
                         <p>Contact Us</p>
                     </NavLink>
@@ -67,19 +67,19 @@ export const Footer = () => {
                         </NavLink>
 
 
-                        <NavLink to="">
+                        <NavLink to="https://www.instagram.com/vishwasanatanhindufoundation/">
                         <FaInstagram className='footer-icon'/>
                         </NavLink>
 
                         
-                        <NavLink to="">
+                        {/* <NavLink to="">
                         <FaFacebook className='footer-icon'/>
 
                         </NavLink>
 
                         <NavLink to="" className="footer-icon">
                             <FaLinkedin />
-                        </NavLink>
+                        </NavLink> */}
 
                     </div>
                 </div>
