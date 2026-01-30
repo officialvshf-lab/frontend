@@ -8,7 +8,7 @@ export const Registration = () => {
 
   /* ================= MEMBERSHIP AMOUNTS ================= */
   const MEMBERSHIP_AMOUNT = {
-    "General Member": 1,
+    "General Member": 151,
     "District Member": 2100,
     "State Member": 5100,
     "National Member": 11000
